@@ -183,3 +183,11 @@ engine 在三处埋点,每条带 `thread_id` 作 trace:
 - **完成** → `info`(stop_reason + 总超步数)。
 
 **脱敏**:只记节点名 / 超步 / 原因,**绝不记 state / prompt / 输出**(同 rein)。生产排障要的"哪个节点在哪步出了什么事",这些就够了。
+
+---
+
+## 生产加固:节点级超时 + 自动重试(`config.py` + `engine.py`)
+
+`GraphConfig` 加 `node_timeout_s`(单节点超时)+ `node_max_retries`(异常自动重试次数)。superstep 调节点时包一层 `_run_node_with_policy`:超时用 `asyncio.wait_for`,真异常(含超时)自动重试 N 次,**耗尽才抛 → 落到已有的错误中断**。瞬时错误(网络抖动 / 限流)自己扛过去,持续失败才惊动人。**中断(审批)正常返回、不算异常、不重试。**
+
+> 至此节点失败的处理是**三层防线**:① 自动重试(瞬时) → ② 错误中断(持续,人决定重试 / 放弃) → ③ 熔断(全局失控兜底)。和 rein 单 agent 的「provider 重试/fallback + 工具异常封装 + 熔断」一个思路,升到节点粒度。reinGraph 升 **Beta**。
