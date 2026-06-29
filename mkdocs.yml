@@ -1,7 +1,7 @@
 site_name: reinGraph
 site_description: 把多个 rein agent 编排成有状态的图工作流 —— 条件、循环、并行、HITL,内核复用 rein。
 site_author: Rein Authors
-site_url: https://malunan.github.io/rein-graph/
+site_url: https://malunan.github.io/rein-graph-docs/
 repo_url: https://github.com/MaLunan/rein-graph
 
 docs_dir: website
