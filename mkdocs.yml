@@ -78,6 +78,12 @@ nav:
     - 可视化: guides/visualization.md
   - 设计哲学(复用 rein): design.md
   - 对比 LangGraph: vs-langgraph.md
+  - API 参考:
+    - 总览: reference/index.md
+    - StateGraph: reference/state-graph.md
+    - CompiledGraph: reference/compiled-graph.md
+    - GraphConfig: reference/config.md
+    - 类型参考: reference/types.md
 
 extra:
   social:
